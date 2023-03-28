@@ -14,7 +14,7 @@ order by sales.customer_id;
 
 -- 2. How many days has each customer visited the restaurant?
 SET search_path = dannys_diner;
-select sales.customer_id,count(sales.order_date)
+select sales.customer_id,distinct(count(sales.order_date))
 from  sales 
 group by sales.customer_id
 order by sales.customer_id;
