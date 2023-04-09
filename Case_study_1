@@ -51,6 +51,25 @@ order by count(sales.product_id) DESC
 limit 1
 
 -- 5. Which item was the most popular for each customer?
+
+SET search_path = dannys_diner;
+with c as(
+select s.customer_id,m.product_name,count( m.product_name) as order_count,
+dense_rank() over (partition by customer_id order by count( m.product_name) DESC)
+ as ranking
+from sales s
+join menu m on s.product_id=m.product_id
+group by s.customer_id,m.product_name
+)
+select customer_id,product_name,order_count
+from c
+where ranking =1
+order by customer_id
+
+
+
+
+
 -- 6. Which item was purchased first by the customer after they became a member?
 set search_path=dannys_diner;
 select sales.customer_id,menu.product_name,min(order_date)
