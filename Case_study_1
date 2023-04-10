@@ -79,6 +79,16 @@ group by sales.customer_id,sales.product_id,menu.product_name
 LIMIT 3
 
 -- 7. Which item was purchased just before the customer became a member?
+
+SET search_path = dannys_diner;
+select distinct s.customer_id, m.product_name,s.order_date as order_date,
+ me.join_date as joining_date
+from sales s
+join menu m on s.product_id=m.product_id
+join members me on s.customer_id=me.customer_id
+where me.join_date>s.order_date
+order by s.customer_id
+
 -- 8. What is the total items and amount spent for each member before they became a member?
 -- 9.  If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
