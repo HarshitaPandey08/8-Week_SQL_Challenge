@@ -91,7 +91,7 @@ order by s.customer_id
 
 -- 8. What is the total items and amount spent for each member before they became a member?
 SET search_path = dannys_diner;
-select s.customer_id,count(s.customer_id),sum(m.price)
+select s.customer_id,count(s.customer_id) as total_items,sum(m.price) as amount_spent
 from sales s
 join menu m on  s.product_id=m.product_id
 join members me on  s.customer_id=me.customer_id
