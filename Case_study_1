@@ -90,6 +90,15 @@ where me.join_date>s.order_date
 order by s.customer_id
 
 -- 8. What is the total items and amount spent for each member before they became a member?
+SET search_path = dannys_diner;
+select s.customer_id,count(s.customer_id),sum(m.price)
+from sales s
+join menu m on  s.product_id=m.product_id
+join members me on  s.customer_id=me.customer_id
+where s.order_date<me.join_date
+group by s.customer_id
+order by  s.customer_id
+
 -- 9.  If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
 SET search_path = dannys_diner;
